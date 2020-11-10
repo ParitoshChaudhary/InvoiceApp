@@ -94,7 +94,7 @@ DATABASES = {
         'NAME': 'invoiceDB',
         'CLIENT': {
             'host': '127.0.0.1',
-            'port': 27018,
+            'port': 27017,
             'username': 'invoiceAdmin',
             'password': "DB@Invoice_",
             'authSource': 'invoiceDB',
@@ -122,6 +122,11 @@ AUTH_PASSWORD_VALIDATORS = [
     },
 ]
 
+AUTHENTICATION_BACKENDS = (
+    'django.contrib.auth.backends.AllowAllUsersModelBackend',
+    'users.backends.CaseInsensitiveModelBackend'
+)
+
 
 # Internationalization
 # https://docs.djangoproject.com/en/3.1/topics/i18n/
@@ -140,4 +145,12 @@ USE_TZ = True
 # Static files (CSS, JavaScript, Images)
 # https://docs.djangoproject.com/en/3.1/howto/static-files/
 
-STATIC_URL = '/static/'
+STATIC_URL = "/static/"
+
+STATICFILES_DIRS = [
+    os.path.join(BASE_DIR, 'static')
+]
+
+MEDIA_URL = '/'
+
+MEDIA_ROOT = os.path.join(BASE_DIR, 'static/images')
