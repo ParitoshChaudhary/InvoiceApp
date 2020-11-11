@@ -18,12 +18,9 @@ from django.conf.urls.static import static
 from django.contrib import admin
 from django.urls import path, include
 
-import users
+import users.urls
 from .views import (
     home_screen_view
-)
-from users.views import (
-    register_view
 )
 
 urlpatterns = [
