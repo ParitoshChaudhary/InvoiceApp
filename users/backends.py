@@ -1,5 +1,6 @@
 from django.contrib.auth import get_user_model
 from django.contrib.auth.backends import ModelBackend
+from django.core.exceptions import ObjectDoesNotExist
 
 
 class CaseInsensitiveModelBackend(ModelBackend):
@@ -13,7 +14,7 @@ class CaseInsensitiveModelBackend(ModelBackend):
             case_insensetive_username_field = '{}__iexact'.format(UserModel.USERNAME_FIELD)
             user = UserModel._default_manager.get(**{case_insensetive_username_field: username})
 
-        except UserModel.DoesNotExists:
+        except ObjectDoesNotExist:
             UserModel().set_password(password)
 
         else:

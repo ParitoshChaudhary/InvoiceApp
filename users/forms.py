@@ -1,5 +1,6 @@
 from django import forms
 from django.contrib.auth.forms import UserCreationForm
+from django.core.exceptions import ObjectDoesNotExist
 from django.contrib.auth import authenticate
 from .models import UserAccount
 
@@ -14,14 +15,14 @@ class RegistrationForm(UserCreationForm):
         email = self.cleaned_data['email'].lower()
         try:
             account = UserAccount.objects.get(email=email)
-        except Exception as e:
+        except ObjectDoesNotExist:
             return email
-        raise forms.ValidationError(f"Email {account} already in use. Please choose another one.")
+        raise forms.ValidationError(f"Email {email} already in use. Please choose another one.")
 
     def clean_username(self):
         username = self.cleaned_data['username'].lower()
         try:
             account = UserAccount.objects.get(username=username)
-        except Exception as e:
+        except ObjectDoesNotExist:
             return username
         raise forms.ValidationError(f"Username {account} already in use. Please choose another one.")

@@ -9,4 +9,19 @@ def register_view(request, *args, **kwargs):
     if user.is_authenticated:
         return HttpResponse(f"You are already authenticated as {user.email}")
     context = {}
+    if request.POST:
+        form = RegistrationForm(request.POST)
+        if form.is_valid():
+            user = form.save()
+            email = form.cleaned_data.get('email').lower()
+            raw_password = form.cleaned_data.get('password1')
+            account = authenticate(email=email, password=raw_password)
+            login(request, user, backend='django.contrib.auth.backends.ModelBackend')
+            destination = kwargs.get("next")
+            if destination:
+                return redirect(destination)
+            return redirect('home')
+
+        else:
+            context['registration_form'] = form
     return render(request, "users/register.html", context)
