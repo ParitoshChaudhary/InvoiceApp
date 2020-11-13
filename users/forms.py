@@ -4,6 +4,7 @@ from django.core.exceptions import ObjectDoesNotExist
 from django.contrib.auth import authenticate
 from .models import UserAccount
 
+
 class RegistrationForm(UserCreationForm):
     email = forms.EmailField(max_length=255, help_text="Required a valid email address.")
 
@@ -26,3 +27,18 @@ class RegistrationForm(UserCreationForm):
         except ObjectDoesNotExist:
             return username
         raise forms.ValidationError(f"Username {account} already in use. Please choose another one.")
+
+
+class AccountAuthenticationForm(forms.ModelForm):
+    password = forms.CharField(label="Password", widget=forms.PasswordInput)
+
+    class Meta:
+        model = UserAccount
+        fields = ["username", "password"]
+
+    def clean(self):
+        if self.is_valid():
+            username = self.cleaned_data['username']
+            password = self.cleaned_data['password']
+            if not authenticate(username=username, password=password):
+                raise forms.ValidationError("Invalid Login")
