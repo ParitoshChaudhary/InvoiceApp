@@ -158,3 +158,5 @@ STATICFILES_DIRS = [
 MEDIA_URL = '/'
 
 MEDIA_ROOT = os.path.join(BASE_DIR, 'static/images')
+
+BASE_URL = "https://127.0.0.1"

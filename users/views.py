@@ -2,6 +2,8 @@ from django.shortcuts import render, redirect
 from django.http import HttpResponse
 from django.contrib.auth import login, authenticate, logout
 from .forms import RegistrationForm, AccountAuthenticationForm
+from .models import UserAccount
+from django.conf import settings
 
 
 def register_view(request, *args, **kwargs):
@@ -61,4 +63,31 @@ def get_redirect_if_exists(request):
         if request.GET.get("next"):
             redirect = str(request.GET.get("next"))
         return redirect
+
+
+def account_view(request, *args, **kwargs):
+    context = {}
+    user_id = kwargs.get("user_id")
+    try:
+        account = UserAccount.objects.get(pk=user_id)
+    except UserAccount.DoesNotExist:
+        return HttpResponse("Something went wrong. Please try later")
+    if account:
+        context['id'] = account.id
+        context['email'] = account.email
+        context['username'] = account.username
+        context['profile_pic'] = account.profile_pic.url
+        context['company_name'] = account.company_name
+
+        is_self = True
+        user = request.user
+        if user.is_authenticated and user != account:
+            is_self = False
+        elif not user.is_authenticated:
+            is_self = False
+
+        context['is_self'] = is_self
+        context['BASE_URL'] = settings.BASE_URL
+
+    return render(request, 'users/account.html', context)
 
