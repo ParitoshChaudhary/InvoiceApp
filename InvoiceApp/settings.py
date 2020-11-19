@@ -98,7 +98,7 @@ DATABASES = {
         'NAME': 'invoiceDB',
         'CLIENT': {
             'host': '127.0.0.1',
-            'port': 27017,
+            'port': 27018,
             'username': 'invoiceAdmin',
             'password': "DB@Invoice_",
             'authSource': 'invoiceDB',
@@ -159,4 +159,4 @@ MEDIA_URL = '/'
 
 MEDIA_ROOT = os.path.join(BASE_DIR, 'static/images')
 
-BASE_URL = "https://127.0.0.1"
+BASE_URL = "http://127.0.0.1:8000/"

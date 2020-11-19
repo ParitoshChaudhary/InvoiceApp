@@ -7,6 +7,7 @@ from .views import (
     register_view,
     login_view,
     logout_view,
+    account_view,
 )
 
 urlpatterns = [
@@ -27,6 +28,7 @@ urlpatterns = [
     path('reset/done/', auth_views.PasswordResetCompleteView.as_view(
         template_name='password_reset/password_reset_complete.html'),
          name='password_reset_complete'),
+    path('account/<userid>/')
 ]
 
 if settings.DEBUG:
