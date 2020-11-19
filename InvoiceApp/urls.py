@@ -26,7 +26,7 @@ from .views import (
 urlpatterns = [
     path('admin/', admin.site.urls),
     path("", home_screen_view, name="home"),
-    path("user/", include(users.urls))
+    path("user/", include(users.urls, namespace='users'))
 ]
 
 if settings.DEBUG:
