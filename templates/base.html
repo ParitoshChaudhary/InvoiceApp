@@ -39,11 +39,23 @@
         <a class="nav-link" href="{% url 'users:logout' %}">Logout</a>
       </li>
     </ul>
+    <form class="form-inline my-2 my-lg-0" onsubmit="return executeQuery();">
+      <input class="form-control mr-sm-2" name="q" type="search" placeholder="Search" aria-label="Search" id="search_id">
+      <button class="btn btn-outline-success my-2 my-sm-0" type="submit">Search</button>
+    </form>
   </div>
 </nav>
 
 </head>
 <body>
+    <script type="text/javascript">
+        function executeQuery() {
+            let query = "";
+            query = document.getElementById('search_id').value;
+            window.location.replace("{% url 'users:search' %}?q=" + query)
+            return false
+        }
+    </script>
     <!-- Optional JavaScript -->
     <!-- jQuery first, then Popper.js, then Bootstrap JS -->
     <script src="https://code.jquery.com/jquery-3.4.1.slim.min.js" integrity="sha384-J6qa4849blE2+poT4WnyKhv5vZF5SrPo0iEjwBvKU7imGFAV0wwj1yYfoRSJoZ+n" crossorigin="anonymous"></script>
