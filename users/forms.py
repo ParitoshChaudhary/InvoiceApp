@@ -42,3 +42,10 @@ class AccountAuthenticationForm(forms.ModelForm):
             password = self.cleaned_data['password']
             if not authenticate(username=username, password=password):
                 raise forms.ValidationError("Invalid Login")
+
+
+class AccountUpdateForm(forms.ModelForm):
+
+    class Meta:
+        model = UserAccount
+        fields = ['username', 'email', 'profile_pic', 'company_name']
