@@ -1,7 +1,8 @@
+from django.core.exceptions import ObjectDoesNotExist
 from django.shortcuts import render, redirect
 from django.http import HttpResponse
 from django.contrib.auth import login, authenticate, logout
-from .forms import RegistrationForm, AccountAuthenticationForm
+from .forms import RegistrationForm, AccountAuthenticationForm, AccountUpdateForm
 from .models import UserAccount
 from django.conf import settings
 
@@ -105,3 +106,29 @@ def account_search_view(request, *args, **kwargs):
                 accounts.append(account)
             context['accounts'] = accounts
     return render(request, 'users/search_results.html', context)
+
+
+def edit_account_view(request, *args, **kwargs):
+    if not request.user.is_authenticated:
+        redirect('users:login')
+    user_id = kwargs.get('user_id')
+    try:
+        account = UserAccount.objects.get(pk=user_id)
+    except ObjectDoesNotExist:
+        return HttpResponse("Something went wrong please try again later.")
+    if account.pk != request.user.pk:
+        return HttpResponse("You are not allowed to edit this account")
+    context = {}
+    if request.POST:
+        form = AccountUpdateForm(request.POST, request.FILES, instance=request.user)
+        if form.is_valid():
+            form.save()
+            return redirect('users:account_view', user_id=account.pk)
+        else:
+            form = AccountUpdateForm(request.POST, instance=request.user,
+                                     initial={ "id" = account.pk,
+            "email" = account.email,
+            "username" = account.username,
+            "profile_pic" = account.profile_pic,
+            "company_name" = account.company_name
+            })

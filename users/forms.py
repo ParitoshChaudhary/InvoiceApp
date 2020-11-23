@@ -49,3 +49,29 @@ class AccountUpdateForm(forms.ModelForm):
     class Meta:
         model = UserAccount
         fields = ['username', 'email', 'profile_pic', 'company_name']
+
+    def clean_email(self):
+        email = self.cleaned_data['email'].lower()
+        try:
+            account = UserAccount.objects.exclude(pk=self.instance.pk).get(email=email)
+        except ObjectDoesNotExist:
+            return email
+        raise forms.ValidationError(f'Email {email} already in use')
+
+    def clean_username(self):
+        username = self.cleaned_data['username']
+        try:
+            account = UserAccount.objects.exclude(pk=self.instance.pk).get(username=username)
+        except ObjectDoesNotExist:
+            return username
+        raise forms.ValidationError(f"Username {username} already exists")
+
+    def save(self, commit=True):
+        account = super(AccountUpdateForm, self).save(commit=False)
+        account.username = self.cleaned_data['username']
+        account.email = self.cleaned_data['email']
+        account.profile_pic = self.cleaned_data['profile_pic']
+        account.company_name = self.cleaned_data['company_name']
+        if account:
+            account.save()
+        return account
