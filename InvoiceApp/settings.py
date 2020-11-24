@@ -15,7 +15,6 @@ from pathlib import Path
 # Build paths inside the project like this: BASE_DIR / 'subdir'.
 BASE_DIR = Path(__file__).resolve().parent.parent
 
-
 # Quick-start development settings - unsuitable for production
 # See https://docs.djangoproject.com/en/3.1/howto/deployment/checklist/
 
@@ -75,7 +74,6 @@ TEMPLATES = [
 
 WSGI_APPLICATION = 'InvoiceApp.wsgi.application'
 
-
 # Database
 # https://docs.djangoproject.com/en/3.1/ref/settings/#databases
 
@@ -98,7 +96,7 @@ DATABASES = {
         'NAME': 'invoiceDB',
         'CLIENT': {
             'host': '127.0.0.1',
-            'port': 27017,
+            'port': 27018,
             'username': 'invoiceAdmin',
             'password': "DB@Invoice_",
             'authSource': 'invoiceDB',
@@ -106,7 +104,6 @@ DATABASES = {
         }
     }
 }
-
 
 # Password validation
 # https://docs.djangoproject.com/en/3.1/ref/settings/#auth-password-validators
@@ -131,7 +128,6 @@ AUTHENTICATION_BACKENDS = (
     'users.backends.CaseInsensitiveModelBackend'
 )
 
-
 # Internationalization
 # https://docs.djangoproject.com/en/3.1/topics/i18n/
 
@@ -144,7 +140,6 @@ USE_I18N = True
 USE_L10N = True
 
 USE_TZ = True
-
 
 # Static files (CSS, JavaScript, Images)
 # https://docs.djangoproject.com/en/3.1/howto/static-files/
@@ -160,3 +155,5 @@ MEDIA_URL = '/'
 MEDIA_ROOT = os.path.join(BASE_DIR, 'static/images')
 
 BASE_URL = "http://127.0.0.1:8000/"
+
+DATA_UPLOAD_MAX_MEMORY_SIZE = 10485760  # 10*1024*1024 (Bytes, Max image size 10MB)

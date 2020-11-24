@@ -9,6 +9,7 @@ from .views import (
     logout_view,
     account_view,
     account_search_view,
+    edit_account_view,
 )
 
 app_name = 'users'
@@ -33,6 +34,7 @@ urlpatterns = [
         template_name='password_reset/password_reset_complete.html'),
          name='password_reset_complete'),
     path('<user_id>/', account_view, name='account_view'),
+    path('<user_id>/edit/', edit_account_view, name='edit'),
 ]
 
 if settings.DEBUG:
