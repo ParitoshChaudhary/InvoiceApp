@@ -54,19 +54,23 @@
                                 <div class="text" id="id_text">Edit</div>
                             </div>
                         </div>
-                        <p class="form-signin" method="post">{% csrf_token %}
-                            <input class="d-none" type="file" id="id_profile_image_file_selector"
-                                   name="profile_image_file_selector" onchange="readURL(this)">
+                        <form class="form-signin" method="post">
+                            {% csrf_token %}
+                            <input class="d-none" type="file" id="id_profile_image"
+                                   name="profile_image" onchange="readURL(this)">
                             <h6 class="mt-4 field-heading">Email</h6>
                             <input type="email" name="email" id="id_input_email" class="form-control"
                                    placeholder="Email address" required autofocus value={{form.initial.email}}>
                             <h6 class="mt-4 field-heading">Username</h6>
                             <input type="text" name="username" id="id_input_username" class="form-control"
                                    placeholder="Username" required value="{{form.initial.username}}">
+                            <h6 class="mt-4 field-heading">Company</h6>
+                            <input type="text" name="company_name" id="id_input_company" class="form-control"
+                                   placeholder="Comapny Name" required value="{{form.initial.company_name}}">
                             {% for field in form %}
                                 <p>
                                     {% for error in field.errors %}
-                                        <p style="color: red">{{ error }}</p>
+                                        <p style="color: red">{{ error }} </p>
                                     {% endfor %}
                                 </p>
                             {% endfor %}
@@ -85,8 +89,105 @@
         </div>
     </div>
     <script type="text/javascript">
+        enableImageOverlay()
         function readURL(imageUrl){
-            // TODO
+            //TODO
+        }
+        function enableImageOverlay() {
+            let text = document.getElementById('id_text')
+            text.style.background = "#0066FF"
+            text.style.color = "white"
+            text.style.fontSize = "16px"
+            text.style.padding = "16px 32px"
+            text.style.cursor = "pointer"
+
+            const profile_image = document.getElementById("id_profile_image");
+            profile_image.style.opacity = "1"
+            profile_image.style.display = "block"
+            profile_image.style.width = "100%"
+            profile_image.style.height = "auto"
+            profile_image.style.transition = ".5s ease"
+            profile_image.style.backfaceVisibility = "hidden"
+            profile_image.style.cursor = "pointer"
+
+            const middleContainer = document.getElementById("id_middle_container");
+            middleContainer.style.transition = ".5s ease"
+            middleContainer.style.opacity = "0"
+            middleContainer.style.position = "absolute"
+            middleContainer.style.top = "50%"
+            middleContainer.style.left = "50%"
+            middleContainer.style.transform = "translate(-50%, -50%)"
+            middleContainer.style.textAlign = "center"
+
+            const imageContainer = document.getElementById("id_image_container");
+            imageContainer.addEventListener("mouseover", function (event) {
+                profile_image.style.opacity = "0.3"
+                middleContainer.style.opacity = "1"
+            })
+
+            imageContainer.addEventListener("mouseout", function (event) {
+                profile_image.style.opacity = "1"
+                middleContainer.style.opacity = "0"
+            })
+
+            imageContainer.addEventListener("click", function (event) {
+                document.getElementById('id_profile_image').click();
+            });
+
+            const cropConfirm = document.getElementById("id_image_crop_confirm");
+            cropConfirm.classList.remove("d-flex")
+            cropConfirm.classList.remove("flex-row")
+            cropConfirm.classList.remove("justify-content-between")
+            cropConfirm.classList.add("d-none")
+        }
+
+        function disableImageOverlay(){
+            const profileImage = document.getElementById("id_profile_image_display");
+            const middleContainer = document.getElementById("id_middle_container")
+            const imageContainer = document.getElementById("id_image_container")
+            const text = document.getElementById("id_text")
+
+            imageContainer.removeEventListener("mouseover", function( event ) {
+                profileImage.style.opacity = "0.3"
+                middleContainer.style.opacity = "1"
+            })
+
+            imageContainer.removeEventListener("mouseout", function( event ) {
+                profileImage.style.opacity = "1"
+                middleContainer.style.opacity = "0"
+            })
+
+            profileImage.style.opacity = "1"
+            middleContainer.style.opacity = "0"
+            text.style.cursor = "default"
+            text.style.opacity = "0"
+
+            document.getElementById('id_image_container').removeEventListener("click", function(event){
+                event.preventDefault();
+                // do nothing
+            });
+            document.getElementById('id_profile_image').addEventListener("click", function(event){
+                event.preventDefault();
+                // do nothing
+            });
+
+            var cropConfirm = document.getElementById("id_image_crop_confirm")
+            cropConfirm.classList.remove("d-none")
+            cropConfirm.classList.add("d-flex")
+            cropConfirm.classList.add("flex-row")
+            cropConfirm.classList.add("justify-content-between")
+
+            var confirm = document.getElementById("id_confirm")
+            confirm.addEventListener("click", function(event){
+                // TODO
+                enableImageOverlay()
+            })
+
+            var cancel = document.getElementById("id_cancel")
+            cancel.addEventListener("click", function(event){
+                console.log("Reloading window...")
+                window.location.reload();
+            })
         }
     </script>
 {% endblock content %}
