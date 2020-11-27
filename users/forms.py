@@ -73,5 +73,5 @@ class AccountUpdateForm(forms.ModelForm):
         account.profile_pic = self.cleaned_data['profile_pic']
         account.company_name = self.cleaned_data['company_name']
         if account:
-            account.save()
+            account.save() 
         return account
