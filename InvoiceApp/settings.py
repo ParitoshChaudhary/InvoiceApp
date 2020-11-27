@@ -96,7 +96,7 @@ DATABASES = {
         'NAME': 'invoiceDB',
         'CLIENT': {
             'host': '127.0.0.1',
-            'port': 27017,
+            'port': 27018,
             'username': 'invoiceAdmin',
             'password': "DB@Invoice_",
             'authSource': 'invoiceDB',
