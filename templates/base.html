@@ -35,9 +35,11 @@
       <li class="nav-item">
         <a class="nav-link" href="{% url 'users:login' %}">Login</a>
       </li>
-      <li class="nav-item">
-        <a class="nav-link" href="{% url 'users:logout' %}">Logout</a>
-      </li>
+      {% if id %}
+        <li class="nav-item">
+            <a class="nav-link" href="{% url 'users:logout' %}">Logout</a>
+        </li>
+      {% endif %}
       {% if id %}
         <li class="nav-item">
             <a class="nav-link" href="{% url 'users:account_view' user_id=id %}">Profile</a>

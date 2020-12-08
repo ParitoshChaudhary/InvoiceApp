@@ -110,14 +110,14 @@
         }
 
         function enableImageOverlay(){
-            var text = document.getElementById("id_text")
+            const text = document.getElementById("id_text");
             text.style.backgroundColor = "#0066ff"
             text.style.color = "white"
             text.style.fontSize = "16px"
             text.style.padding = "16px 32px"
             text.style.cursor = "pointer"
 
-            var profileImage = document.getElementById("id_profile_image")
+            const profileImage = document.getElementById("id_profile_image");
             profileImage.style.opacity = "1"
             profileImage.style.display = "block"
             profileImage.style.width = "100%"
@@ -126,7 +126,7 @@
             profileImage.style.backfaceVisibility  = "hidden"
             profileImage.style.cursor = "pointer"
 
-            var middleContainer = document.getElementById("id_middle_container")
+            const middleContainer = document.getElementById("id_middle_container");
             middleContainer.style.transition = ".5s ease"
             middleContainer.style.opacity = "0"
             middleContainer.style.position = "absolute"
@@ -135,7 +135,7 @@
             middleContainer.style.transform = "translate(-50%, -50%)"
             middleContainer.style.textAlign = "center"
 
-            var imageContainer = document.getElementById("id_image_container")
+            const imageContainer = document.getElementById("id_image_container");
             imageContainer.addEventListener("mouseover", function( event ) {
                 profileImage.style.opacity = "0.3"
                 middleContainer.style.opacity = "1"
