@@ -45,6 +45,11 @@
             <a class="nav-link" href="{% url 'users:account_view' user_id=id %}">Profile</a>
         </li>
       {% endif %}
+      {% if id %}
+        <li class="nav-item">
+            <a class="nav-link" href="{% url 'users:get_all_users' %}">Users</a>
+        </li>
+      {% endif %}
     </ul>
     <form class="form-inline my-2 my-lg-0" onsubmit="return executeQuery();">
       <input class="form-control mr-sm-2" name="q" type="search" placeholder="Search" aria-label="Search" id="search_id">

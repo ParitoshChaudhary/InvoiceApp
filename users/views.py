@@ -148,3 +148,17 @@ def edit_account_view(request, *args, **kwargs):
         context['form'] = form
     context['DATA_UPLOAD_MAX_MEMORY_SIZE'] = settings.DATA_UPLOAD_MAX_MEMORY_SIZE
     return render(request, "users/edit_account.html", context)
+
+
+def get_all_users(request, *args, **kwargs):
+    context = {}
+    user_list = []
+    user = request.user
+    if user.is_authenticated:
+        user_list = UserAccount.objects.get()
+        print(user_list)
+
+    else:
+        redirect("users:login")
+
+    return render(request, "#", context)
